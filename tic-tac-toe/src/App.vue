@@ -1,47 +1,54 @@
 <script setup>
-import HelloWorld from './components/HelloWorld.vue'
-import TheWelcome from './components/TheWelcome.vue'
+import { ref } from 'vue';
+import Game from './components/Game.vue';
+
+let playerActive = null
+let gameStarted = ref(false);
+
+let playerShuffle = () => {
+  return Math.random() < 0.5;
+}
+const startGame = () => {
+    gameStarted.value = !gameStarted.value;
+    let number = playerShuffle();
+    if (number < 0.5){
+      playerActive = "Player 1"
+    }else{
+      playerActive = "Player 2"
+    }
+    console.log("playerActive: " , playerActive);
+};
 </script>
 
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
-
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
+  <header class="">
+    <div class="text-center mb-8">
+      <h1 class="text-5xl font-bold underline text-white">
+        Welcome to the game
+      </h1>
+      <div>
+        <button
+        v-if="!gameStarted" 
+        @click="startGame"
+        class="mt-3 rounded-sm p-2 bg-emerald-600 text-black hover:bg-emerald-400">
+          Start Game
+        </button> 
+        <button
+        v-else
+        @click="startGame"
+        class="mt-3 rounded-sm p-2 bg-emerald-600 text-black hover:bg-emerald-400">
+          Restart Game
+        </button> 
+      </div>
     </div>
   </header>
-
-  <main>
-    <TheWelcome />
+  <main 
+  v-if="gameStarted"
+  class="w-[800px] h-[800px] mx-auto">
+    <Game :playerTurn="playerActive"/>
   </main>
 </template>
 
 <style scoped>
-header {
-  line-height: 1.5;
-}
 
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
-
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
-}
 </style>
