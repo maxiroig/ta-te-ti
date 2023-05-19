@@ -49,6 +49,4 @@ const startGame = () => {
   </main>
 </template>
 
-<style scoped>
 
-</style>
