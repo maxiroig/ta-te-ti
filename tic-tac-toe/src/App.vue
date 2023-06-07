@@ -16,7 +16,6 @@ const startGame = () => {
     }else{
       playerActive = "Player 2"
     }
-    console.log("playerActive: " , playerActive);
 };
 </script>
 
